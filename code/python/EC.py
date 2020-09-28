@@ -4,6 +4,7 @@
 # The ADC is running on the I2C bus
 # Howard Webb
 # 2019/08/16
+
  Out of water reads about 30000
  Just touching is about 28000 or lower
  The deeper it is submerged, the lower the value
