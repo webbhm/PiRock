@@ -156,7 +156,24 @@ class ADS1115(object):
     def data_rate_config(self, data_rate):
         if data_rate not in ADS1115_CONFIG_DR:
             raise ValueError('Data rate must be one of: 8, 16, 32, 64, 128, 250, 475, 860')
-        return ADS1115_CONFIG_DR[data_rate]    
+        return ADS1115_CONFIG_DR[data_rate]
+    
+    def volts5(self, channel, gain=1, data_rate=None):
+        # Return value as raw voltage
+        in_voltage = 5 # assume using 5 volts for sensor input
+        adc_range = 32767 # Range of ADC returns       
+        value = self.read_adc(channel)
+        #return in_voltage - ((value/adc_range) * in_voltage)
+        return (value/adc_range) * in_voltage
+        
+    def volts3(self, channel, gain=1, data_rate=None):
+        # Return value as raw voltage
+        in_voltage = 3 # assume using 3 volts for sensor input
+        adc_range = 32767 # Range of ADC returns       
+        value = self.read_adc(channel)
+        #return in_voltage - ((value/adc_range) * in_voltage)
+        return (value/adc_range) * in_voltage
+        
 
 def test():
    """Loop data collection
@@ -180,6 +197,26 @@ def test():
            print("{}: {}, {}: {}".format("Channel", channel, "Value", value))
        time.sleep(5)
    
+def test2():
+   """Loop data collection
+        Args:
+            None
+        Returns:
+            None
+        Raises:
+            None
+   """
+   print("Test2 ADS1115")
+   adc = ADS1115()
+   print("ADS1115")
+   while True:
+       print("\n")
+       for channel in range(0, 4):
+           value = adc.volts3(channel)
+           print("{}: {}, {}: {}".format("Channel", channel, "Value", value))
+       time.sleep(5)
+
+
 def validate():
     """Exercise all the ADS1115 functions
         Args:
@@ -199,7 +236,7 @@ def validate():
     print("Value " + str(value))
     
 if __name__=="__main__":
-    test()            
+    test2()            
     
     
 
